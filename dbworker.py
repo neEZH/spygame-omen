@@ -13,11 +13,12 @@ def user_start(user_id, username):
     user.save()
 
 
-def create_room(user_id, code, select_method):
-    room = Rooms(room_code=code,
-                 selection=select_method,
-                 players=[user_id],
-                 owner=user_id)
+def create_room(user_id, code, select_method=0):
+    room = Rooms.get_or_create(owner=user_id)
+    room.room_code = code
+    room.selection = select_method
+    room.players = [user_id]
+    room.owner = user_id
     room.save()
 
 
@@ -26,15 +27,19 @@ def join_room(user_id, room_code):
     if room is not None:
         room.players.append(user_id)
         room.save()
-        return room
-    else:
-        return None
+    return room
+
+
+def get_room_by_owner(user_id):
+    room = Rooms.get_or_none(Rooms.owner == user_id)
+    return room
 
 
 def add_place(place_name, user_id):
     new_place = Places(name=place_name,
                        owner=user_id)
     new_place.save()
+    return Places.select().where(Places.owner == user_id)
 
 
 def get_places_by_id(place_id):
@@ -42,11 +47,15 @@ def get_places_by_id(place_id):
     return place.name
 
 
+def get_places_all():
+    query = Places.select()
+    return query.dicts().execute()
+
+
 def get_places_by_owner(user_ids):
     # find places where Places.owner in user_ids[]
     query = Places.select().where(Places.owner << user_ids)
-    places_selected = query.dicts().execute()
-    return places_selected
+    return query #.dicts().execute()
 
 
 def set_spy(room_code, user_id):

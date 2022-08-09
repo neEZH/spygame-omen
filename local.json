@@ -1,0 +1,17 @@
+{
+  "en" : {
+    "messages" : {
+      "start" : "Choose language to continue",
+      "new player" : "welcome, {0}!\ntype \"join room\" to join room XD",
+      "join room" : "now send room code",
+      "join done" : "you joined room to {0}.\nPlayers in room:\n{1}",
+      "join failed" : "something went wrong\nCheck correction of room code",
+      "room created" : "Room successfully created\ncode for friends: {0}",
+      "place" : "place is {0}",
+      "spy" : "You are spy",
+      "room settings" : "Current settings for your room:\nplace selection:{0}\n",
+      "added place" : "Place {0} added!\nyour places added:\n{1}"
+    },
+    "buttons" : {}
+  }
+}

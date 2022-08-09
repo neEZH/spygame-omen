@@ -10,16 +10,17 @@ class User(BaseModel):
     # id = AutoField(column_name='ID', primary_key=True)
     tg_id = IntegerField(column_name='tgid', primary_key=True)
     nickname = CharField(column_name='tg_nickname', null=True)
+    # local = CharField(column_name="language", default="en")
 
     class Meta:
         table_name = 'users'
 
 
 class Rooms(BaseModel):
-    id = AutoField(column_name='ID', primary_key=True)
-    code = TextField(column_name='code')
+    # id = AutoField(column_name='ID', primary_key=True)
+    code = TextField(column_name='code', primary_key=True)
     players = ArrayField(IntegerField, column_name='players')
-    selection = JSONField(column_name='selection')
+    selection = SmallIntegerField(column_name='selection', default=0)
     spy = IntegerField(column_name='spy_tgid', null=True)
     owner = IntegerField(column_name='owner')
 
