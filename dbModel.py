@@ -1,9 +1,13 @@
-from peewee import *
 from playhouse.postgres_ext import *
+import os
+
+
+pg_db = PostgresqlDatabase(os.environ['DATABASE_URL'])
+
 
 class BaseModel(Model):
     class Meta:
-        database = conn
+        database = pg_db
 
 
 class User(BaseModel):
@@ -35,3 +39,8 @@ class Places(BaseModel):
 
     class Meta:
         table_name = 'places'
+
+
+def create_tables():
+    with pg_db:
+        pg_db.create_tables([User, Rooms, Places])

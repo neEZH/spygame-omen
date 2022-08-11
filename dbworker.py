@@ -1,16 +1,13 @@
 from peewee import *
 from dbModel import *
-import os
-
-# from psycopg2 import *
-
-pg_db = PostgresqlDatabase(os.environ['DATABASE_URL'])
 
 
 def user_start(user_id, username):
+    pg_db.connect()
     user = User.get_or_create(tg_id=user_id)
     user.nickname = username
     user.save()
+    pg_db.close()
 
 
 def create_room(user_id, code, select_method=0):
