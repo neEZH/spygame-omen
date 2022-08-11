@@ -9,7 +9,7 @@ tbot = telebot.TeleBot(os.environ['tbotToken'])
 
 @tbot.message_handler(commands=["start"])
 def start(message):
-    reply = spy.new_player(message.from_user.id, message.from_user.username, message.from_user.is_bot)
+    # reply = spy.new_player(message.from_user.id, message.from_user.username, message.from_user.is_bot)
     tbot.send_message(message.chat.id, "reply")
 
 
