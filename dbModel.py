@@ -43,4 +43,9 @@ class Places(BaseModel):
 
 def create_tables():
     with pg_db:
-        pg_db.create_tables([User, Rooms, Places])
+        try:
+            pg_db.connect()
+            pg_db.create_tables([User, Rooms, Places])
+        except Exception as e:
+            print(e)
+        pg_db.close()
