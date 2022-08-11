@@ -26,8 +26,9 @@ def new_room(u_id):
 
 def join_room(u_id, room_code):
     room = db.join_room(u_id, room_code)
-    if room:
-        return message["en"]["messages"]["join done"].format("\n".join(room.players))
+    if room is not None:
+        players_string = [str(player) for player in room.players]
+        return message["en"]["messages"]["join done"].format(room.code, "\n".join(players_string))
     else:
         return message["en"]["messages"]["join failed"]
 

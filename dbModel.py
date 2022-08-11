@@ -23,11 +23,11 @@ class User(BaseModel):
 
 class Rooms(BaseModel):
     # id = AutoField(column_name='ID', primary_key=True)
-    code = TextField(column_name='code', primary_key=True)
-    players = ArrayField(IntegerField, column_name='players')
+    code = TextField(column_name='code', null=True)
+    players = ArrayField(IntegerField, column_name='players', null=True)
     selection = SmallIntegerField(column_name='selection', default=0)
     spy = IntegerField(column_name='spy_tgid', null=True)
-    owner = IntegerField(column_name='owner')
+    owner = IntegerField(column_name='owner', primary_key=True)
 
     class Meta:
         table_name = 'rooms'

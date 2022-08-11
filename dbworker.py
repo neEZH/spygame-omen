@@ -4,26 +4,30 @@ from dbModel import *
 
 def user_start(user_id, username):
     pg_db.connect()
-    user = User.get_or_create(tg_id=user_id)
+    user = User.get_or_create(tg_id=user_id)[0]
     user.nickname = username
     user.save()
     pg_db.close()
 
 
 def create_room(user_id, code, select_method=0):
-    room = Rooms.get_or_create(owner=user_id)
-    room.room_code = code
+    pg_db.connect()
+    room = Rooms.get_or_create(owner=user_id)[0]
+    room.code = code
     room.selection = select_method
     room.players = [user_id]
     room.owner = user_id
     room.save()
+    pg_db.close()
 
 
 def join_room(user_id, room_code):
-    room = Rooms.get_or_none(Rooms.code == room_code)
+    pg_db.connect()
+    room = Rooms.get_or_none(Rooms.code == room_code, ~ Rooms.players.contains(user_id))
     if room is not None:
         room.players.append(user_id)
         room.save()
+    pg_db.close()
     return room
 
 
