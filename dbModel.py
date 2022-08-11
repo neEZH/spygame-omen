@@ -1,8 +1,9 @@
 from playhouse.postgres_ext import *
+from playhouse.db_url import connect
 import os
 
 
-pg_db = PostgresqlDatabase(os.environ['DATABASE_URL'])
+pg_db = connect(os.environ['DATABASE_URL'])
 
 
 class BaseModel(Model):
